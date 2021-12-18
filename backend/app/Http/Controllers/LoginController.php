@@ -28,8 +28,8 @@ class LoginController extends Controller
         );
       
 
-        $customer = Customer::where(['pNumber'=>$request->pNumber,'pass'=>$request->pass])->first();
-        $employee = Employee::where(['pNumber'=>$request->pNumber,'pass'=>$request->pass])->first();
+        $customer = Customer::where(['pNumber'=>$request->name,'pass'=>$request->password])->first();
+        $employee = Employee::where(['pNumber'=>$request->name,'pass'=>$request->password])->first();
         
         
         $type ="";
@@ -49,10 +49,11 @@ class LoginController extends Controller
             $api_token = Str::random(64);
             $token = new Token();
             $token->userid = $id;
+            $token->type = $type;
             $token->token = $api_token;
             $token->created_at = new DateTime();
             $token->save();
-            return [$token,$type];
+            return $token;
        }
        else{
             return "No user";
