@@ -49,10 +49,11 @@ class LoginController extends Controller
             $api_token = Str::random(64);
             $token = new Token();
             $token->userid = $id;
+            $token->type = $type;
             $token->token = $api_token;
             $token->created_at = new DateTime();
             $token->save();
-            return [$token,$type];
+            return $token;
        }
        else{
             return "No user";
