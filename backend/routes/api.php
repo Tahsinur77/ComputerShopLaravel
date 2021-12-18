@@ -35,7 +35,7 @@ Route::get('/logout', [welcomeController::class,'logout'])->name('logout');
 Route::get('/home', [welcomeController::class,'home'])->name('home');
 
 //Login
-Route::post('/login/submit',[LoginController::class,'loginSubmit'])->middleware('userType')->name('login.submit');
+Route::post('/login/submit',[LoginController::class,'loginSubmit'])->name('login.submit');
 
 
 //Customers

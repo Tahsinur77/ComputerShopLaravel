@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Employee;
 
+use App\Models\Token;
+use Illuminate\Support\Str;
+use DateTime;
+
 class LoginController extends Controller
 {
     
@@ -24,11 +28,35 @@ class LoginController extends Controller
         );
       
 
-        if($request->session()->has('type')){
-            $type = $request->session()->get('type');
+        $customer = Customer::where(['pNumber'=>$request->pNumber,'pass'=>$request->pass])->first();
+        $employee = Employee::where(['pNumber'=>$request->pNumber,'pass'=>$request->pass])->first();
+        
+        
+        $type ="";
+        $id = "";
+
+        if($customer!=""){
+            $type = "customer"; 
+            $id = $customer->id;
+        }
+        else if($employee != ""){
+            $type = $employee->empType;
+            $id = $employee->id;
         }
         
-       return $type;
+        
+       if($type != ""){
+            $api_token = Str::random(64);
+            $token = new Token();
+            $token->userid = $id;
+            $token->token = $api_token;
+            $token->created_at = new DateTime();
+            $token->save();
+            return [$token,$type];
+       }
+       else{
+            return "No user";
+       }
 
         
     }

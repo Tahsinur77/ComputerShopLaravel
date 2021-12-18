@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'NavBarFindings'=> \App\Http\Middleware\NavBarFindings::class,
         'userType'=> \App\Http\Middleware\userType::class,
+        'APIAuth'=>\App\Http\Middleware\APIAuth::class
     ];
 }
