@@ -11,46 +11,18 @@ class ProductController extends Controller
     //
 
     public function productList(Request $req){
-  
         $allProducts = Product::All();
-
-        $products = array();
-
-        foreach($allProducts as $product){
-            $var= new Product();
-            $var->id = $product->id;
-            $var->pName = $product->pName;
-            $var->pCategory = $product->pCategory;
-            $var->pType = $product->pType;
-            $var->pId = $product->pId;
-            $var->pPrice = $product->pPrice;
-            $var->pQuantity = $product->pQuantity;
-            $var->pPicture = 'storage/uploads/'.$product->pPicture;
-            $var->pSpecification = json_decode($product->pSpecification);
-           
-            
-
-            $miniSpecification  =array();
-
-            $check = 0;
-            foreach(json_decode($product->pSpecification) as $spe){
-                array_push($miniSpecification,$spe);
-                $check++;
-
-                if($check == 3) break;
-            }
-
-            $var->miniSpecifications = $miniSpecification;
-
-            array_push($products,$var);
-        }
-        
-
-        return $products;
+        return $allProducts;
     }
 
-    public function navigationCheck(){
-        return "successful";
+    public function navigationCheck(Request $req){
+        $categorys = Product::select('pCategory')->distinct()->pluck('pCategory');
+        return $categorys;
+    }
+
+    public function subproducts(Request $req){
+        $types = Product::select('pType')->where('pCategory',$req->category)->distinct()->pluck('pType');
+        return $types;
     }
 
     public function products(Request $req){
@@ -107,40 +79,7 @@ class ProductController extends Controller
     public function productListByCategory(Request $req){
         $categoryName = $req->category;
         $allProducts = Product::where('pCategory',$categoryName)->get();
-
-        $products = array();
-
-        foreach($allProducts as $product){
-            $var= new Product();
-            $var->id = $product->id;
-            $var->pName = $product->pName;
-            $var->pCategory = $product->pCategory;
-            $var->pType = $product->pType;
-            $var->pId = $product->pId;
-            $var->pPrice = $product->pPrice;
-            $var->pQuantity = $product->pQuantity;
-            $var->pPicture = 'storage/uploads/'.$product->pPicture;
-            $var->pSpecification = json_decode($product->pSpecification);
-           
-            
-
-            $miniSpecification  =array();
-
-            $check = 0;
-            foreach(json_decode($product->pSpecification) as $spe){
-                array_push($miniSpecification,$spe);
-                $check++;
-
-                if($check == 3) break;
-            }
-
-            $var->miniSpecifications = $miniSpecification;
-
-            array_push($products,$var);
-        }
-        
-
-        return $products;
+        return $allProducts;
     }
 
 
@@ -148,37 +87,7 @@ class ProductController extends Controller
         $categoryName = $req->category;
         $typeName = $req->type;
         $allProducts = Product::where(['pCategory'=>$categoryName,'pType'=>$typeName])->get();
-
-        $products = array();
-
-        foreach($allProducts as $product){
-            $var= new Product();
-            $var->id = $product->id;
-            $var->pName = $product->pName;
-            $var->pCategory = $product->pCategory;
-            $var->pType = $product->pType;
-            $var->pId = $product->pId;
-            $var->pPrice = $product->pPrice;
-            $var->pQuantity = $product->pQuantity;
-            $var->pPicture = 'storage/uploads/'.$product->pPicture;
-            $var->pSpecification = json_decode($product->pSpecification);
-
-            $miniSpecification  =array();
-
-            $check = 0;
-            foreach(json_decode($product->pSpecification) as $spe){
-                array_push($miniSpecification,$spe);
-                $check++;
-
-                if($check == 3) break;
-            }
-
-            $var->miniSpecifications = $miniSpecification;
-
-            array_push($products,$var);
-        }
-
-        return $products;
+        return $allProducts;
     }
     
     public function productDetails(Request $req){

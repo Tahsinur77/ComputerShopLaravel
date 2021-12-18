@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/',[ProductController::class,'productList'])->name('allProductLists');
+Route::get('/ok',[ProductController::class,'productList'])->name('allProductLists');
 
 
 Route::get('/logout', [welcomeController::class,'logout'])->name('logout');
@@ -54,6 +54,8 @@ Route::post('/saveProducts',[ProductController::class,'products'])->name('produc
 Route::get('/products/list/{category}',[ProductController::class,'productListByCategory'])->name('products.category.item');
 Route::get('/products/list/{category}/{type}',[ProductController::class,'productListByType'])->name('products.category.item');
 Route::get('/productDetails/{id}',[ProductController::class,'productDetails'])->name('productDetails');
+
+Route::get('/subproducts/{category}',[ProductController::class,'subproducts']);
 
 //Empolyee
 

@@ -21,7 +21,7 @@ class NavbarFindings
         $categorys = Product::select('pCategory')->pluck('pCategory');
         $categorys = $categorys->unique();
     
-        session()->put('pCategorys',json_encode($categorys));
+        session()->put('pCategorys',$categorys);
 
         foreach($categorys as $category){
             $types = Product::select('pType')->where('pCategory',$category)->pluck('pType');
