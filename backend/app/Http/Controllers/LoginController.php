@@ -27,7 +27,7 @@ class LoginController extends Controller
         //     ]
         // );
       
-
+    
         $customer = Customer::where(['pNumber'=>$request->name,'pass'=>$request->password])->first();
         $employee = Employee::where(['pNumber'=>$request->name,'pass'=>$request->password])->first();
         
