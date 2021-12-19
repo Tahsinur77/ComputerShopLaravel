@@ -15,19 +15,19 @@ class LoginController extends Controller
     
 
     public function loginSubmit(Request $request){
-        $this->validate(
-            $request,
-            [
-                'pNumber'=>'required|regex:/^[0-9]*$/',
-                'pass'=>'required|min:4',
-            ],
-            [
-                'pNumber.required'=>'Please put your phone number',
-                'pass.required'=>'Please put your password',
-            ]
-        );
+        // $this->validate(
+        //     $request,
+        //     [
+        //         'pNumber'=>'required|regex:/^[0-9]*$/',
+        //         'pass'=>'required|min:4',
+        //     ],
+        //     [
+        //         'pNumber.required'=>'Please put your phone number',
+        //         'pass.required'=>'Please put your password',
+        //     ]
+        // );
       
-
+    
         $customer = Customer::where(['pNumber'=>$request->name,'pass'=>$request->password])->first();
         $employee = Employee::where(['pNumber'=>$request->name,'pass'=>$request->password])->first();
         
